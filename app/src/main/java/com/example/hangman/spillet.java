@@ -54,7 +54,7 @@ public class spillet extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.back);
         reset = (ImageView) findViewById(R.id.reset);
 
-        //initiere knapperne også videre.
+        //initiere knapperne også videre.dd
         synligtord = (TextView) findViewById(R.id.textView7);
         synligtord.setText(spil.getSynligtOrd());
 
