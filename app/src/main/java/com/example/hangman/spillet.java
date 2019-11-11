@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,8 +23,10 @@ import logisk.Galgelogik;
 
 public class spillet extends AppCompatActivity {
     String bogstav, synligtord1;
-    int point = 1;
-
+    int point = 1,point2=1;
+    datasingleton list = datasingleton.getInstance();
+    //
+    Galgelogik spil = new Galgelogik();
 
     //det der bliver sendt ind
     Button send, tilbage;
@@ -34,15 +35,31 @@ public class spillet extends AppCompatActivity {
     ImageView hangman, back, reset;
 
 
-    //
-    Galgelogik spil = new Galgelogik();
+
+
+
     int antalforkertbogstaver = spil.getAntalForkerteBogstaver();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spillet);
+
+        //henter ord fra internettet
+        class getwordsfrominternet extends AsyncTask{
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try{
+                    spil.hentOrdFraDr();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        } new getwordsfrominternet().execute();
+
 
         //gemmer actionbar for at appen ser lækker ud
         ActionBar actionBar = getSupportActionBar();
@@ -75,27 +92,34 @@ public class spillet extends AppCompatActivity {
 
                 if (spil.erSpilletSlut()==false){
                     point++;
+                    point2++;
                 }
                 synligtord.setText(spil.getSynligtOrd());
 
                 //foretager animationen
                 antalforkertbogstaver = spil.getAntalForkerteBogstaver();
-
                 billede(antalforkertbogstaver);
-                Intent tilwinning = new Intent(spillet.this, winning.class);
 
-                if(spil.erSpilletVundet()==true){
-                    tilwinning.putExtra("point",point);
+                ///hvis man vinder eller taber
+                Intent tilwinning = new Intent(spillet.this, winning.class);
+                if(spil.erSpilletVundet()==true) {
+                    tilwinning.putExtra("point", point);
                     startActivity(tilwinning);
                     spil.nulstil();
                     billede(0);
-                    point=0;
                     synligtord.setText(spil.getSynligtOrd());
                 }
 
-                if(spil.erSpilletTabt()){
-
-
+                Intent tilloosing = new Intent(spillet.this,losingscreen.class);
+                if(spil.erSpilletTabt()==true){
+                    list.addvalue(point);
+                    tilloosing.putExtra("point1",point2);
+                    startActivity(tilloosing);
+                    spil.nulstil();
+                    billede(0);
+                    point2=0;
+                    point2=0;
+                    synligtord.setText(spil.getSynligtOrd());
                 }
 
             }
@@ -108,7 +132,6 @@ public class spillet extends AppCompatActivity {
             public void onClick(View v) {
                 spil.nulstil();
                 billede(0);
-                point=0;
                 synligtord.setText(spil.getSynligtOrd());
             }
         });
@@ -126,8 +149,6 @@ public class spillet extends AppCompatActivity {
 
         //
     }
-
-    public int getPoint(){ return point;}
 
     public void billede(int spil){
         switch (spil) {
@@ -151,10 +172,10 @@ public class spillet extends AppCompatActivity {
                 break;
             case 6:
                 hangman.setImageResource(R.drawable.forkert6);
-
                 break;
         }
     }
+
 
 
 }

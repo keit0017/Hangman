@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-     Button startspil,hjælp,afslut;
+     Button startspil,hjælp,afslut,topliste;
 
 
     @Override
@@ -29,12 +29,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         startspil = (Button)findViewById(R.id.startspilknap);
         hjælp = (Button)findViewById(R.id.hjelpmeny);
         afslut = (Button)findViewById(R.id.afslut);
+        topliste = (Button) findViewById(R.id.topliste);
 
 
         // nu til onclick
         startspil.setOnClickListener( this);
         hjælp.setOnClickListener( this);
         afslut.setOnClickListener( this);
+        topliste.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         } else if (v == afslut) {
             this.finish();
             System.exit(0);
+        } else if (v == topliste){
+            Intent tiltopliste = new Intent(this, toplist.class);
+            startActivity(tiltopliste);
         }
 
     }
