@@ -23,9 +23,8 @@ import logisk.Galgelogik;
 
 
 public class spillet extends AppCompatActivity {
-
-
     String bogstav, synligtord1;
+    int point = 1;
 
 
     //det der bliver sendt ind
@@ -37,7 +36,7 @@ public class spillet extends AppCompatActivity {
 
     //
     Galgelogik spil = new Galgelogik();
-    int point = 0, antalforkertbogstaver = spil.getAntalForkerteBogstaver();
+    int antalforkertbogstaver = spil.getAntalForkerteBogstaver();
 
 
     @Override
@@ -74,21 +73,42 @@ public class spillet extends AppCompatActivity {
                 bogstav = gættetbogstav.getText().toString();
                 spil.gætBogstav(bogstav);
 
+                if (spil.erSpilletSlut()==false){
+                    point++;
+                }
                 synligtord.setText(spil.getSynligtOrd());
 
                 //foretager animationen
                 antalforkertbogstaver = spil.getAntalForkerteBogstaver();
 
                 billede(antalforkertbogstaver);
+                Intent tilwinning = new Intent(spillet.this, winning.class);
+
+                if(spil.erSpilletVundet()==true){
+                    tilwinning.putExtra("point",point);
+                    startActivity(tilwinning);
+                    spil.nulstil();
+                    billede(0);
+                    point=0;
+                    synligtord.setText(spil.getSynligtOrd());
+                }
+
+                if(spil.erSpilletTabt()){
+
+
+                }
 
             }
         });
+
+
 
         reset.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 spil.nulstil();
                 billede(0);
+                point=0;
                 synligtord.setText(spil.getSynligtOrd());
             }
         });
@@ -99,12 +119,15 @@ public class spillet extends AppCompatActivity {
                 finish();
                 spil.nulstil();
                 billede(0);
+                point=0;
                 synligtord.setText(spil.getSynligtOrd());
             }
         });
 
         //
     }
+
+    public int getPoint(){ return point;}
 
     public void billede(int spil){
         switch (spil) {
