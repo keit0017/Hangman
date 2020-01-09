@@ -7,9 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.animation.*;
 import java.util.*;
 
 public class winning extends AppCompatActivity {
+
+    /*
+    charlie sheen sagde det bedst
+     */
+
 
     private int poin;
     private TextView pointshow;
@@ -27,7 +33,7 @@ public class winning extends AppCompatActivity {
         prøvigen =(Button) findViewById(R.id.tryagain);
         pointshow=(TextView) findViewById(R.id.textView9);
         pointshow.setText(String.valueOf(poin));
-
+        startAnimation();
         prøvigen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,4 +41,11 @@ public class winning extends AppCompatActivity {
             }
         });
     }
+
+    private void startAnimation(){
+        Animation animation =  AnimationUtils.loadAnimation(this,R.anim.anim);
+        pointshow.startAnimation(animation);
+    }
+
+
 }

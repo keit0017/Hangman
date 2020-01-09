@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
      Button startspil,hjælp,afslut,topliste;
 
+     /*dette er menuen der introducere spilleren*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void onClick(View v) {
         if (v == startspil) {
 
-            Intent tilspil = new Intent(this, spillet.class);
+            Intent tilspil = new Intent(this, splashscreeen.class);
             startActivity(tilspil);
 
         } else if (v == hjælp) {

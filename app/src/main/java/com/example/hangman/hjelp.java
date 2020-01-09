@@ -14,6 +14,8 @@ public class hjelp extends AppCompatActivity implements OnClickListener {
 
     Button menu;
 
+    /*hjælp skærm*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +25,8 @@ public class hjelp extends AppCompatActivity implements OnClickListener {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        //
-        menu =(Button)findViewById(R.id.tilbagetilmenu);
 
-        //
+        menu =(Button)findViewById(R.id.tilbagetilmenu);
         menu.setOnClickListener(this);
     }
 

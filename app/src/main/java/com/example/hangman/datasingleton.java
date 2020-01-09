@@ -1,12 +1,19 @@
 package com.example.hangman;
 
+
 import java.util.*;
+import android.content.SharedPreferences;
+
+/*this singelton class keeps all the scores and makes sure that
+scores are temporerary saved
+ */
 
 public class datasingleton {
 
     private static final datasingleton INSTANCE = new datasingleton();
 
     ArrayList<String> highscores = new ArrayList<>();
+    int placering= 0;
 
     private datasingleton() {}
 

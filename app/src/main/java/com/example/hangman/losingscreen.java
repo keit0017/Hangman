@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,8 +17,6 @@ public class losingscreen extends AppCompatActivity {
     private int poin;
     private TextView pointshow;
     private Button prøvigen;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +31,16 @@ public class losingscreen extends AppCompatActivity {
         pointshow=(TextView) findViewById(R.id.antalforsøg);
         pointshow.setText(String.valueOf(poin));
 
-
-
+        startAnimation();
         prøvigen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 losingscreen.this.finish();
             }
         });
+    }
+    private void startAnimation(){
+        Animation animation =  AnimationUtils.loadAnimation(this,R.anim.anim);
+        pointshow.startAnimation(animation);
     }
 }
